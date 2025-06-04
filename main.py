@@ -1,14 +1,4 @@
-import json
-
-db_path = "db/tasks.json"
-
-def write_task(task):
-    with open(db_path,'w') as f:
-        json.dump(task, f, indent=4)
-
-def read_tasks():
-    with open(db_path, 'r') as f:
-        return json.load(f)
+from task_logic import help, list, add, deleteAll, delete
 
 def main():
 
@@ -17,48 +7,12 @@ def main():
 
     while True:
         command = input()
-
         if(command == "exit"): break
-
-        elif(command == "help"):
-            print("\nAvailable commands:")
-            print("exit - Exit the program")
-            print("add - Add a new task")
-            print()
-
-        elif(command == "list"):
-            tasks = read_tasks()
-            print("\n")
-            for task in tasks:
-                print(f'{task["id"]} {task["description"]}')
-
-        elif(command[:3] == "add"):
-            description = command[4:]
-            tasks = read_tasks()
-            task = {
-                "id" : len(tasks)+1,
-                "description" : description,
-                "status" : False
-            }
-            tasks.append(task)
-            write_task(tasks)
-        
-        elif(command == "delete all"):
-            write_task([])
-
-        elif(command[:6] == "delete"):
-            id = int(command[7:])
-            tasks = read_tasks()
-            newTasks = []
-            foundId = False
-
-            for task in tasks:
-                if(task["id"] == id): foundId = True
-                else:
-                    if(foundId): task["id"] -= 1
-                    newTasks.append(task)
-
-            write_task(newTasks)
+        elif(command == "help"): help()
+        elif(command == "list"): list()
+        elif(command[:3] == "add"): add(command[4:])
+        elif(command == "delete all"): deleteAll()
+        elif(command[:6] == "delete"): delete(int(command[7:]))
 
 if __name__ == "__main__":
     main()
