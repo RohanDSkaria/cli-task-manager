@@ -1,11 +1,11 @@
 import json
-import os
-from dotenv import load_dotenv
 
-load_dotenv()
-db_path = os.getenv("DB_PATH")
+with open("config.json") as f:
+    config = json.load(f)
 
-if(db_path is None) : raise ValueError("DB_PATH is not set in .env")
+db_path = config["DB_PATH"]
+
+if(db_path is None) : raise ValueError("DB_PATH is not set in config.json")
 
 def write_task(task):
     with open(db_path,'w') as f:
