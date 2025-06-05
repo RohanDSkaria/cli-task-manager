@@ -1,4 +1,4 @@
-from task_logic import help, list, add, deleteAll, delete
+from task_logic import help, list, add, deleteAll, delete, mark
 
 def main():
 
@@ -9,10 +9,11 @@ def main():
         command = input()
         if(command == "exit"): break
         elif(command == "help"): help()
-        elif(command == "list"): list()
+        elif(command[:4] == "list"): list(command[5:])
         elif(command[:3] == "add"): add(command[4:])
         elif(command == "delete all"): deleteAll()
         elif(command[:6] == "delete"): delete(int(command[7:]))
+        elif(command[:4] == "mark"): mark(command[5:])
 
 if __name__ == "__main__":
     main()
